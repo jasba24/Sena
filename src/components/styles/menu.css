@@ -1,0 +1,14 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 10%;
+  background-color: #fff;
+  padding: 20px;
+  right: 0%;
+}
+
+.menu_input {
+  margin: 20px 0;
+  margin-right: 20px;
+}
