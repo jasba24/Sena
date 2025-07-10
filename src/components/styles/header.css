@@ -1,0 +1,138 @@
+header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  background-color: #31c6d4;
+}
+
+.red-title {
+  color: #bc4444;
+  text-align: center;
+  font-size: 52px;
+  font-family: myfont;
+  font-style: italic;
+}
+
+.title {
+  font-size: 50px;
+}
+
+.start {
+  margin: 0;
+  color: #116052;
+  text-decoration: none;
+}
+
+nav img {
+  cursor: pointer;
+}
+
+.icon {
+  width: 50px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.shoe-icon {
+  right: 100px;
+}
+
+.logo-icon {
+  width: 250px;
+}
+
+.text-icon {
+  font-size: 20px;
+  color: white;
+  position: absolute;
+  right: 75px;
+  top: -15px;
+  background-color: #46a64c;
+  border-radius: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.hero-container {
+  width: 100%;
+  height: 800px;
+  background: url('../../assets/heroImage2.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.hero-container img {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 1200px) {
+  header h1,
+  .red-title,
+  .title {
+    font-size: 40px;
+  }
+  .hero-container {
+    height: 600px;
+  }
+}
+
+@media (max-width: 900px) {
+  header h1,
+  .red-title,
+  .title {
+    font-size: 30px;
+  }
+  .logo-icon {
+    width: 200px;
+  }
+  .hero-container {
+    align-items: center;
+    height: 2000px;
+    background: url('../../assets/heroImageMobile2.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  header {
+    height: 200px;
+  }
+  .logo-icon {
+    width: 150px;
+  }
+  header h1,
+  .red-title,
+  .title {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 500px) {
+  header {
+    height: 130px;
+  }
+  .logo-icon {
+    width: 100px;
+  }
+  header h1,
+  .red-title,
+  .title {
+    font-size: 28px;
+    margin: 0;
+  }
+  .icon {
+    width: 30px;
+  }
+}
+
+@media (max-width: 375px) {
+  header h1,
+  .red-title,
+  .title {
+    font-size: 15px;
+  }
+}

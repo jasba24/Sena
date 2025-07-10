@@ -1,0 +1,126 @@
+h1 {
+  font-family: myfont;
+  color: white;
+}
+
+.hero-image {
+  width: 100%;
+}
+.image-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 20px 0 20px 0;
+}
+
+.section-container {
+  display: flex;
+  overflow-x: scroll;
+  background-color: rgba(0, 255, 209, 0.4);
+  margin: 0 20px;
+  width: 97%;
+}
+
+.section-container a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 10px;
+  color: #544f4f;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 900;
+}
+
+.section-container img {
+  width: 100%;
+}
+
+.buy-button {
+  text-transform: uppercase;
+  background-color: #07c;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  box-shadow: rgba(255, 255, 255, 0.4) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  /* font-family: -apple-system, system-ui, 'Segoe UI', 'Liberation Sans',
+    sans-serif; */
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.15385;
+  margin: 0;
+  outline: none;
+  padding: 8px 0.8em;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.buy-button:hover,
+.buy-button:focus {
+  background-color: #31c6d4;
+}
+
+.catalog-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.catalog-container a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  outline: none;
+  outline-style: none;
+  outline-width: 0;
+}
+.catalog-container img {
+  width: 50%;
+}
+
+.yellow-link {
+  color: yellow;
+  font-family: myfont;
+}
+
+.catalog-container h1 {
+  margin: 0;
+}
+
+@media (max-width: 1300px) {
+  .section-container img {
+    height: 200px;
+  }
+  .section-container h2 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 700px) {
+  .catalog-container {
+    flex-direction: column;
+  }
+  .section-container {
+    overflow-x: hidden;
+    flex-direction: column;
+  }
+  .section-container img {
+    height: 500px;
+  }
+  .section-container h2 {
+    font-size: 40px;
+  }
+  .buy-button {
+    font-size: 40px;
+  }
+}
