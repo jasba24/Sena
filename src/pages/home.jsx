@@ -9,11 +9,11 @@ function Home() {
       <h1 className="red-title">Catalogos disponibles </h1>
       <div className="catalog-container">
         <Link to={"/category/1"}>
-          <img src={"../assets/heroImage.png"} alt="" />
+          <img src={logo1} alt="" />
           <h1 className="yellow-link">Ver catalogo 1</h1>
         </Link>
         <Link to={"/category/2"}>
-          <img src={"../assets/heroImage.png"} alt="" />
+          <img src={logo1} alt="" />
           <h1 className="yellow-link">Ver catalogo 2</h1>
         </Link>
       </div>

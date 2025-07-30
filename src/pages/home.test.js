@@ -1,14 +1,14 @@
 import React from 'react'
 import { render, screen } from "@testing-library/react"
-import { MemoryRouter } from "react-router-dom"
+import { BrowserRouter } from "react-router-dom"
 import Home from "./home"
 
 describe("Home component", () => {
   test("renders title and catalog links", () => {
     render(
-      <MemoryRouter>
+      <BrowserRouter>
         <Home />
-      </MemoryRouter>
+      </BrowserRouter>
     )
 
     expect(screen.getByText(/Catalogos disponibles/i)).toBeInTheDocument()
