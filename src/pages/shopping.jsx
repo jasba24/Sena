@@ -1,7 +1,5 @@
-import React from 'react'
-
-import '../components/styles/shopping.css'
-
+import React from "react"
+import "../components/styles/shopping.css"
 
 function Shooping() {
   const imgs = []
@@ -9,7 +7,6 @@ function Shooping() {
     console.log(localStorage.length)
     imgs.push(localStorage.getItem(i))
   }
-  
   return (
     <div>
       <h1>Tus productos son los siguientes:</h1>
