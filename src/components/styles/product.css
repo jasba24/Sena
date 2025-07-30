@@ -17,6 +17,10 @@ main img {
   width: 100%;
 }
 
+.center-container {
+  text-align: center;
+}
+
 .buy-content {
   display: flex;
   flex-direction: column;

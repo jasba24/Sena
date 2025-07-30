@@ -29,7 +29,7 @@ function Category() {
             key={i}
             sectionName={v[0]}
             productImage={v[1]}
-            categoryLink={v[3]}
+            categoryLink={`${v[3]}/1`}
             productName={productCategories[i]}
           />
         )

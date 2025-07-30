@@ -1,17 +1,17 @@
-import React from 'react'
-import '../components/styles/product.css'
-import CatalogList from '../components/catalogList'
-import { Link } from 'react-router-dom'
+import React from "react"
+import "../components/styles/shoesList.css"
+import "../components/styles/product.css"
+import CatalogList from "../components/catalogList"
 
 function Catalog() {
   return (
     <main>
-      <Link className="yellow-link title" to={'/Bolsos'}>
-        Volver
-      </Link>
-
-      <div className="imgs">
-        <CatalogList></CatalogList>
+      <div className="center-container">
+        <div className="images-container">
+          <div className="imgs">
+            <CatalogList></CatalogList>
+          </div>
+        </div>
       </div>
     </main>
   )

@@ -1,4 +1,4 @@
-import ImageContainer from './shoesList/imageContainer'
+import ImageContainer from './imageContainer'
 function CatalogList() {
   return <ImageContainer></ImageContainer>
 }
