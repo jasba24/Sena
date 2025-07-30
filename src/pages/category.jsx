@@ -1,20 +1,16 @@
-import React from 'react'
-import '../components/styles/product.css'
-import Categories from '../components/categories'
-import CategoryList from '../components/categoryList'
-import { getCategories } from '../utils/getCategories'
-// import falsaLocion from '../assets/falsaLocion.jpeg'
+import React from "react"
+import "../components/styles/product.css"
+import Categories from "../components/categories"
+import CategoryList from "../components/categoryList"
+import { getCategories } from "../utils/getCategories"
 
 function Category() {
-  window.scroll(0, 0)
-  let params = location.pathname.split('/')[2]
-
-  const categories = getCategories(params).categories
-  const productCategories = getCategories(params).productCategories
+  const categories = getCategories().categories
+  const productCategories = getCategories().productCategories
 
   return (
     <>
-      <h1 className='category-title'>Categorías</h1>
+      <h1 className="category-title">Categorías</h1>
       <section className="image-container">
         {categories.map((v, i) => {
           return (
