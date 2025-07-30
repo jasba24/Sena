@@ -7,6 +7,8 @@ import { getCategories } from "../utils/getCategories"
 function Category() {
   const categories = getCategories().categories
   const productCategories = getCategories().productCategories
+  console.log(productCategories);
+  
 
   return (
     <>
