@@ -1,0 +1,13 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "test"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "mongoose": "^8.17.0"
+  }
+}

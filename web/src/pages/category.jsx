@@ -8,7 +8,6 @@ function Category() {
   const categories = getCategories().categories
   const productCategories = getCategories().productCategories
   console.log(productCategories);
-  
 
   return (
     <>
@@ -31,7 +30,7 @@ function Category() {
             key={i}
             sectionName={v[0]}
             productImage={v[1]}
-            categoryLink={`${v[3]}/1`}
+            categoryLink={`${v[3]}`}
             productName={productCategories[i]}
           />
         )

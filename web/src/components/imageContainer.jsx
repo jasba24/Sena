@@ -9,7 +9,7 @@ function ImageContainer() {
   return (
     <div className="product-container">
       <h1>
-        Bolsos en cuero
+        {route}
       </h1>
       <div className="center-container">
         {images.map((url, i) => (
