@@ -6,7 +6,9 @@ const cors = require("cors")
 const logger = require("./middleware/logger")
 const NotFound = require("./middleware/NotFound")
 const HandlerError = require("./middleware/HandlerError")
+
 const imagesRouter = require("./controllers/images")
+const usersRouter = require("./controllers/users")
 
 const app = express()
 app.use(express.json())
@@ -14,6 +16,7 @@ app.use(cors())
 app.use(logger)
 
 app.use("/api/images", imagesRouter)
+app.use("/api/users", usersRouter)
 
 app.use(NotFound)
 app.use(HandlerError)
