@@ -9,6 +9,8 @@ const HandlerError = require("./middleware/HandlerError")
 
 const imagesRouter = require("./controllers/images")
 const usersRouter = require("./controllers/users")
+const loginRouter = require("./controllers/login")
+
 
 const app = express()
 app.use(express.json())
@@ -17,6 +19,7 @@ app.use(logger)
 
 app.use("/api/images", imagesRouter)
 app.use("/api/users", usersRouter)
+app.use("/api/login", loginRouter)
 
 app.use(NotFound)
 app.use(HandlerError)
