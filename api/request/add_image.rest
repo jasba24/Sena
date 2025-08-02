@@ -1,0 +1,10 @@
+POST http://localhost:3001/api/images
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OGUxNjRiMDMyN2JkNDRhNjM4NGQ0NiIsInVzZXJuYW1lIjoiamFzYmEyNCIsImlhdCI6MTc1NDE0MjQ5MCwiZXhwIjoxNzU0NzQ3MjkwfQ.Q2XGRoWmLzQXmzSDx7swNvdKfgKbhpne-6MeV5QOTdU
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="image"; filename="logo.png"
+Content-Type: image/png
+
+< ./logo.png
+--boundary--

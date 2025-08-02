@@ -25,9 +25,16 @@ imagesRouter.get("/:id", (req, res, next) => {
 })
 
 imagesRouter.delete("/:id", UserExtractor, async (req, res) => {
-  const id = req.params.id
-  await Image.findByIdAndRemove(id)
-  res.status(204).end()
+  try {
+    const deleted = await Image.findByIdAndDelete(req.params.id)
+    if (!deleted) {
+      return res.status(404).json({ message: "Imagen no encontrada" })
+    }
+
+    res.status(200).json({ message: "Imagen eliminada correctamente" })
+  } catch (err) {
+    next(err)
+  }
 })
 
 imagesRouter.post("/", upload.single("image"), async (req, res) => {
@@ -47,3 +54,5 @@ imagesRouter.post("/", upload.single("image"), async (req, res) => {
       .json({ message: "Error al subir la imagen", details: error.message })
   }
 })
+
+module.exports = imagesRouter
