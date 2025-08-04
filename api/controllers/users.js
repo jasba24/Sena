@@ -1,3 +1,4 @@
+const userExtractor = require("../middleware/UserExtractor")
 const bcrypt = require("bcrypt")
 const usersRouter = require("express").Router()
 const User = require("../models/User")
@@ -31,10 +32,16 @@ usersRouter.post("/", async (req, res) => {
   }
 })
 
-usersRouter.delete("/:id", async (req, res) => {
-  const id = req.params.id
-  await User.findByIdAndRemove(id)
-  res.status(204).end()
+usersRouter.delete("/:id", userExtractor, async (req, res) => {
+  try {
+    const id = req.params.id
+    await User.findByIdAndDelete(id)
+    res.status(200).json({ message: "Usuario eliminado con éxito" })
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Erorr al eliminar al usuario", details: error.message })
+  }
 })
 
 module.exports = usersRouter
