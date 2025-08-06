@@ -1,5 +1,6 @@
 import './styles/header.css'
 import { Link } from 'react-router-dom'
+import profile from "../assets/login.png"
 
 function Header() {
   return (
@@ -8,6 +9,7 @@ function Header() {
         <h1 className="red-title">
           Marroquineria en cuero de alta calidad directamente de fábrica
         </h1>
+        <img className='icon login-icon' src={profile} alt="login image" />
       </Link>
     </header>
   )

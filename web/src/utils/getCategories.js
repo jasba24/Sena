@@ -9,7 +9,6 @@ export function getCategories() {
     ],
     productCategories: [
       [
-        "Bolicheros",
         "Deportivos",
         "Mocasines",
         "Plataformas",
