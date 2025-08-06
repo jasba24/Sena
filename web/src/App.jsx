@@ -5,6 +5,7 @@ import Footer from './components/footer'
 import Home from './pages/home'
 import Category from './pages/category'
 import Catalog from './pages/catalog';
+import Login from './pages/login'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route exact path="/:category/" Component={Catalog}></Route>
             <Route exact path="/:category/" Component={Catalog}></Route>
             <Route exact path="/category/:pageId" Component={Category}></Route>
+            <Route exact path="/login" Component={Login}></Route>
           </Routes>
         <Footer />
       </BrowserRouter>

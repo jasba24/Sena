@@ -6,7 +6,7 @@ import logo1 from "../assets/heroImage.png"
 function Home() {
   return (
     <>
-      <h1 className="red-title">Catalogos disponibles </h1>
+      <h1 className="red-title">Catalogos disponibles</h1>
       <div className="catalog-container">
         <Link to={"/category/1"}>
           <img src={logo1} alt="" />

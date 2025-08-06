@@ -79,6 +79,11 @@ h1 {
   background-color: #31c6d4;
 }
 
+.form-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .catalog-container {
   display: flex;
   justify-content: space-evenly;

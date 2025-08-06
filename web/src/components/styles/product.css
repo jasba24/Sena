@@ -12,9 +12,36 @@ main {
 }
 main div img {
   border: 20px solid #00FFD1;
+  
 }
 main img {
   width: 100%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  height: 40px;
+	padding: 5px 5%;
+  font-size: 105%;
+  border-radius: 10px;
+  color:#8a8a8a;
+  border:1px solid #ccc;
+	-moz-border-radius: 27px;
+	-webkit-border-radius: 27px;
+	border-radius: 27px;
+  margin-bottom: 20px;
+}
+
+#buttonSubmit {
+  width: 170px;
+  font-size: 30px;
+  margin: 10px 0 20px 0 ;
 }
 
 .center-container {
