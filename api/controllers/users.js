@@ -32,18 +32,23 @@ usersRouter.post("/", async (req, res) => {
   }
 })
 
-usersRouter.put("/", UserExtractor, async (req, res) => {
+usersRouter.put("/", userExtractor, async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body
-    const userId = req.user.id // extraído del token por el middleware
+
+    const userId = req.userId // extraído del token por el middleware
 
     const user = await User.findById(userId)
+
     if (!user) {
       return res.status(404).json({ message: "Usuario no encontrado" })
     }
 
     // Verificar contraseña actual
-    const passwordMatch = await bcrypt.compare(currentPassword, user.password)
+    const passwordMatch = await bcrypt.compare(
+      currentPassword,
+      user.passwordHash
+    )
     if (!passwordMatch) {
       return res.status(401).json({ message: "Contraseña actual incorrecta" })
     }
@@ -52,15 +57,17 @@ usersRouter.put("/", UserExtractor, async (req, res) => {
     const saltRounds = 10
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds)
 
-    user.password = hashedPassword
+    user.passwordHash = hashedPassword
     await user.save()
 
     res.status(200).json({ message: "Contraseña actualizada correctamente" })
   } catch (error) {
-    res.status(500).json({ message: "Error al cambiar la contraseña", details: error.message })
+    res.status(500).json({
+      message: "Error al cambiar la contraseña",
+      details: error.message,
+    })
   }
 })
-
 
 usersRouter.delete("/:id", userExtractor, async (req, res) => {
   try {
