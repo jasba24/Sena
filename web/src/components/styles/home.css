@@ -3,6 +3,10 @@ h1 {
   color: white;
 }
 
+h2 {
+  color: white;
+}
+
 .hero-image {
   width: 100%;
 }
@@ -102,8 +106,11 @@ h1 {
 }
 
 .yellow-link {
-  color: yellow;
+  color: white;
   font-family: myfont;
+}
+.yellow-link:hover {
+  color: yellow;
 }
 
 .catalog-container h1 {

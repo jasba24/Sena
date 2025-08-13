@@ -1,14 +1,63 @@
-.menu {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 10%;
-  background-color: #fff;
-  padding: 20px;
-  right: 0%;
+.menu-container {
+  position: relative;
+  display: inline-block;
 }
 
-.menu_input {
-  margin: 20px 0;
-  margin-right: 20px;
+.icon.login-icon {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.icon {
+  width: 50px;
+  position: absolute;
+  right: 10px;
+  top: -15px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 10px;
+  z-index: 100;
+  width: 190px;
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-option {
+  width: 100%;
+  padding: 8px 12px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  text-decoration: none;
+  color: black;
+  font-family: myfont;
+}
+
+.menu-option:hover {
+  background-color: #f0f0f0;
+}
+
+.close-button {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
 }

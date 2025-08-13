@@ -1,38 +1,41 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import "../components/styles/home.css"
 import LoginForm from "../components/loginForm"
+import { useLocation } from "react-router-dom"
+import ChangePasswordForm from "../components/changePasswordForm"
+import { setToken } from "../services/login"
 
 function Login() {
   const [errorMessage, setErrorMessage] = useState(null)
-  const [user, setUser] = useState(null)
+  const user = JSON.parse(localStorage.getItem("loggedUser"))
+  const location = useLocation()
+  const changeParam = location.pathname.split("/")[3]
+
+  useEffect(() => {
+    if (user) {
+      setToken(user.token)
+    }
+  })
+
   if (errorMessage) {
     return <div className="error">{errorMessage}</div>
-  }
-
-  if (user) {
-    return <p>Usuario logueado correctamente</p>
   }
 
   return (
     <div className="form-container">
       <div>
         <h1 className="red-title">
-          Si eres nuevo <br /> Registrate
+          {changeParam ? "Cambiar Contraseña" : "Inicia Sesión"}
         </h1>
-        <LoginForm
-          register={true}
-          handleErrorMessage={(error) => setErrorMessage(error)}
-          handleUser={(user) => setUser(user)}
-        ></LoginForm>
-      </div>
-      <div>
-        <h1 className="red-title">
-          Si ya tienes cuenta <br /> Inicia Sesión
-        </h1>
-        <LoginForm
-          handleErrorMessage={(error) => setErrorMessage(error)}
-          handleUser={(user) => setUser(user)}
-        ></LoginForm>
+        {changeParam ? (
+          <ChangePasswordForm
+            handleErrorMessage={(error) => setErrorMessage(error)}
+          ></ChangePasswordForm>
+        ) : (
+          <LoginForm
+            handleErrorMessage={(error) => setErrorMessage(error)}
+          ></LoginForm>
+        )}
       </div>
     </div>
   )

@@ -17,7 +17,8 @@ function App() {
             <Route exact path="/:category/" Component={Catalog}></Route>
             <Route exact path="/:category/" Component={Catalog}></Route>
             <Route exact path="/category/:pageId" Component={Category}></Route>
-            <Route exact path="/login" Component={Login}></Route>
+            <Route exact path="/admin/login" Component={Login}></Route>
+            <Route exact path="/admin/login/:change" Component={Login}></Route>
           </Routes>
         <Footer />
       </BrowserRouter>
