@@ -24,6 +24,17 @@ imagesRouter.get("/:id", (req, res, next) => {
     .catch((err) => next(err))
 })
 
+imagesRouter.get("/category/:category", async (req, res, next) => {
+  const category = req.params.category
+
+  try {
+    const images = await Image.find({ category })
+    res.json(images)
+  } catch (error) {
+    next(error)
+  }
+})
+
 imagesRouter.delete("/:id", UserExtractor, async (req, res) => {
   try {
     const deleted = await Image.findByIdAndDelete(req.params.id)
@@ -40,10 +51,12 @@ imagesRouter.delete("/:id", UserExtractor, async (req, res) => {
 imagesRouter.post("/", upload.single("image"), async (req, res) => {
   try {
     const { originalname, mimetype, buffer } = req.file
+    const { çategory } = req.body
     const newImage = new Image({
       name: originalname,
       data: buffer,
       contentType: mimetype,
+      category,
     })
 
     await newImage.save()
