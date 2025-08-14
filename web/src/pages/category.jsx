@@ -1,13 +1,12 @@
 import React from "react"
 import "../components/styles/product.css"
-import Categories from "../components/categories"
-import CategoryList from "../components/categoryList"
+import Categories from "../components/catalog/categories"
+import CategoryList from "../components/catalog/categoryList"
 import { getCategories } from "../utils/getCategories"
 
 function Category() {
   const categories = getCategories().categories
   const productCategories = getCategories().productCategories
-  console.log(productCategories);
 
   return (
     <>

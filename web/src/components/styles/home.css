@@ -51,6 +51,13 @@ h2 {
   width: 100%;
 }
 
+.gallery-container {
+  display: flex;
+  justify-content: space-between;
+  width: 1000px;
+  margin: 0 auto 20px;
+}
+
 .buy-button {
   text-transform: uppercase;
   background-color: #07c;
