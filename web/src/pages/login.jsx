@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
 import "../components/styles/home.css"
-import LoginForm from "../components/loginForm"
+import LoginForm from "../components/forms/loginForm"
 import { useLocation } from "react-router-dom"
-import ChangePasswordForm from "../components/changePasswordForm"
+import ChangePasswordForm from "../components/forms/changePasswordForm"
 import { setToken } from "../services/login"
 
 function Login() {

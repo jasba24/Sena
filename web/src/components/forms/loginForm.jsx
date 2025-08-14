@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import { login } from "../services/login"
-import { setToken } from "../services/images"
+import { login } from "../../services/login"
+import { setToken } from "../../services/images"
 import { useNavigate } from "react-router-dom"
 
 function LoginForm({ handleErrorMessage }) {

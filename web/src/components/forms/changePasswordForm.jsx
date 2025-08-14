@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { changePassword } from "../services/login"
+import { changePassword } from "../../services/login"
 import { useNavigate } from "react-router-dom"
 
 function ChangePasswordForm() {

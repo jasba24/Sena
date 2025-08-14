@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './styles/categories.css'
+import '../styles/categories.css'
 
 function Categories(props) {
   // eslint-disable-next-line react/prop-types

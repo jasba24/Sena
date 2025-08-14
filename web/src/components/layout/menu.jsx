@@ -1,6 +1,6 @@
 import { useState } from "react"
-import profile from "../assets/menu.png"
-import "./styles/menu.css"
+import profile from "../../assets/menu.png"
+import "../styles/menu.css"
 import { Link, useNavigate } from "react-router-dom"
 
 function Menu() {

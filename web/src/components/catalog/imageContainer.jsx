@@ -1,5 +1,5 @@
-import { useImages } from "../utils/getImages"
-import { useLocation } from 'react-router-dom';
+import { useImages } from "../../utils/getImages"
+import { useLocation } from "react-router-dom"
 
 function ImageContainer() {
   const location = useLocation()
@@ -8,9 +8,7 @@ function ImageContainer() {
 
   return (
     <div className="product-container">
-      <h1>
-        {route}
-      </h1>
+      <h1>{route}</h1>
       <div className="center-container">
         {images.map((url, i) => (
           <img key={i} className="product-image" src={url} alt={`img-${i}`} />
