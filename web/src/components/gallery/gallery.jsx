@@ -7,6 +7,9 @@ import { getAllImages } from "../../services/images"
 
 function Gallery() {
   const route = useParams()
+  const category = route.category
+  console.log({ category })
+
   const [images, setImages] = useState([])
   const [selectedImages, setSelectedImages] = useState([])
   const [refreshFlag, setRefreshFlag] = useState(false)
@@ -24,7 +27,7 @@ function Gallery() {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const responseImages = await getAllImages()
+        const responseImages = await getAllImages(route.category)
         setImages(responseImages)
       } catch (error) {
         console.error("Error al obtener imágenes:", error)

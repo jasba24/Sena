@@ -7,8 +7,8 @@ export const setToken = (newToken) => {
   token = `Bearer ${newToken}`
 }
 
-export const getAllImages = () => {
-  return axios.get(baseURL).then(({ data }) => data)
+export const getAllImages = (route) => {
+  return axios.get(`${baseURL}/category/${route}`).then(({ data }) => data)
 }
 
 export const createImage = (newObject) => {

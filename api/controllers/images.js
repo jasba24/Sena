@@ -19,12 +19,20 @@ imagesRouter.get("/", async (req, res) => {
   res.json(formatted)
 })
 
-imagesRouter.get("/:id", (req, res, next) => {
+imagesRouter.get("/:id", async (req, res, next) => {
   const id = req.params.id
-  Image.findById(id)
+  const image = await Image.findById(id)
     .then((image) => {
       if (image) {
-        res.json(image)
+        const formatted = {
+          _id: image._id,
+          name: image.name,
+          category: image.category,
+          contentType: image.contentType,
+          data: Buffer.from(image.data).toString("base64"),
+        }
+
+        res.json(formatted)
       } else {
         res.status(404).end()
       }
@@ -34,10 +42,18 @@ imagesRouter.get("/:id", (req, res, next) => {
 
 imagesRouter.get("/category/:category", async (req, res, next) => {
   const category = req.params.category
+  console.log(category)
 
   try {
     const images = await Image.find({ category })
-    res.json(images)
+    const formatted = images.map((img) => ({
+      _id: img._id,
+      name: img.name,
+      category: img.category,
+      contentType: img.contentType,
+      data: Buffer.from(img.data).toString("base64"), // ← Aquí está la magia
+    }))
+    res.json(formatted)
   } catch (error) {
     next(error)
   }
