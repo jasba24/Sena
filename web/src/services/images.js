@@ -3,26 +3,34 @@ const baseURL = "http://localhost:3001/api/images"
 
 let token = null
 
-export const setToken = newToken => {
+export const setToken = (newToken) => {
   token = `Bearer ${newToken}`
 }
 
 export const getAllImages = () => {
-  return axios
-    .get(baseURL)
-    .then(({ data }) => data)
+  return axios.get(baseURL).then(({ data }) => data)
 }
 
 export const createImage = (newObject) => {
   const config = {
     headers: {
-      Authorization: token
-    }
+      Authorization: token,
+      "Content-Type": "multipart/form-data",
+    },
   }
-  return axios
-    .post(baseURL, newObject, config)
-    .then((res) => {
-      const { data } = res
-      return data
-    })
+  return axios.post(baseURL, newObject, config).then((res) => {
+    const { data } = res
+    return data
+  })
+}
+
+export const deleteImages = (idsArray) => {
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+    data: { ids: idsArray },
+  }
+
+  return axios.delete(baseURL, config)
 }

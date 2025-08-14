@@ -1,14 +1,22 @@
+const express = require("express")
 const imagesRouter = require("express").Router()
 const Image = require("../models/Image")
-const UserExtractor = require("../middleware/UserExtractor")
 const multer = require("multer")
+const userExtractor = require("../middleware/UserExtractor")
 
 const storage = multer.memoryStorage()
 const upload = multer({ storage })
 
 imagesRouter.get("/", async (req, res) => {
   const images = await Image.find({})
-  res.json(images)
+  const formatted = images.map((img) => ({
+    _id: img._id,
+    name: img.name,
+    category: img.category,
+    contentType: img.contentType,
+    data: Buffer.from(img.data).toString("base64"), // ← Aquí está la magia
+  }))
+  res.json(formatted)
 })
 
 imagesRouter.get("/:id", (req, res, next) => {
@@ -35,7 +43,7 @@ imagesRouter.get("/category/:category", async (req, res, next) => {
   }
 })
 
-imagesRouter.delete("/:id", UserExtractor, async (req, res) => {
+imagesRouter.delete("/:id", userExtractor, async (req, res) => {
   try {
     const deleted = await Image.findByIdAndDelete(req.params.id)
     if (!deleted) {
@@ -48,23 +56,54 @@ imagesRouter.delete("/:id", UserExtractor, async (req, res) => {
   }
 })
 
-imagesRouter.post("/", upload.single("image"), async (req, res) => {
-  try {
-    const { originalname, mimetype, buffer } = req.file
-    const { çategory } = req.body
-    const newImage = new Image({
-      name: originalname,
-      data: buffer,
-      contentType: mimetype,
-      category,
-    })
+imagesRouter.delete("/", express.json(), userExtractor, async (req, res) => {
+  const { ids } = req.body
 
-    await newImage.save()
-    res.status(200).json({ message: "Imagen subida correctamente" })
+  if (!Array.isArray(ids) || ids.length === 0) {
+    return res
+      .status(400)
+      .json({ error: "Debes enviar un array de IDs válidos." })
+  }
+
+  try {
+    const result = await Image.deleteMany({ _id: { $in: ids } })
+    res.json({
+      message: "Imágenes eliminadas correctamente.",
+      deletedCount: result.deletedCount,
+    })
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error al subir la imagen", details: error.message })
+    console.error("Error al eliminar imágenes:", error)
+    res.status(500).json({ error: "Error interno al eliminar imágenes." })
+  }
+})
+
+imagesRouter.post("/", upload.any(), async (req, res) => {
+  try {
+    const { category } = req.body
+    const files = req.files || []
+
+    if (files.length === 0) {
+      return res.status(400).json({ message: "No se recibieron imágenes." })
+    }
+
+    const imageDocs = files.map((file) => ({
+      name: file.originalname,
+      data: file.buffer,
+      contentType: file.mimetype,
+      category,
+    }))
+
+    await Image.insertMany(imageDocs)
+
+    res.status(200).json({
+      message: "Imágenes subidas correctamente",
+      count: imageDocs.length,
+    })
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al subir las imágenes",
+      details: error.message,
+    })
   }
 })
 
