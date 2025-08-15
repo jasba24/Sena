@@ -3,12 +3,10 @@ import { useParams } from "react-router-dom"
 import AddingButton from "./addingButton"
 import DeleteButton from "./deleteButton"
 import SelectionButtons from "./SelectionButtons"
-import { getAllImages } from "../../services/images"
+import { getImagesByCategory } from "../../services/images"
 
 function Gallery() {
   const route = useParams()
-  const category = route.category
-  console.log({ category })
 
   const [images, setImages] = useState([])
   const [selectedImages, setSelectedImages] = useState([])
@@ -27,7 +25,7 @@ function Gallery() {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const responseImages = await getAllImages(route.category)
+        const responseImages = await getImagesByCategory(route.category)
         setImages(responseImages)
       } catch (error) {
         console.error("Error al obtener imágenes:", error)

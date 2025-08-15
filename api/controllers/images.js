@@ -42,7 +42,6 @@ imagesRouter.get("/:id", async (req, res, next) => {
 
 imagesRouter.get("/category/:category", async (req, res, next) => {
   const category = req.params.category
-  console.log(category)
 
   try {
     const images = await Image.find({ category })

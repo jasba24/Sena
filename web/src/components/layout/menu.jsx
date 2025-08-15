@@ -12,7 +12,8 @@ function Menu() {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem("adminAccess")
+    localStorage.removeItem("loggedUser")
+    setShowMenu(!showMenu)
     navigate("/")
   }
 

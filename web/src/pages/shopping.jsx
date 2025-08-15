@@ -4,7 +4,6 @@ import "../components/styles/shopping.css"
 function Shooping() {
   const imgs = []
   for (let i = 0; i < localStorage.length; i++) {
-    console.log(localStorage.length)
     imgs.push(localStorage.getItem(i))
   }
   return (

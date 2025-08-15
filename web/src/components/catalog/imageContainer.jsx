@@ -1,17 +1,29 @@
-import { useImages } from "../../utils/getImages"
-import { useLocation } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { getImagesByCategory } from "../../services/images"
+import { useParams } from "react-router-dom"
 
 function ImageContainer() {
-  const location = useLocation()
-  let route = location.pathname.split("/")[1].split("%20").join("")
-  const images = useImages(route)
+  const [images, setImages] = useState([])
+  const route = useParams()
+  useEffect(() => {
+    const fetchImages = async () => {
+      const images = await getImagesByCategory(route.category)
+      setImages(images)
+    }
+    fetchImages()
+  })
 
   return (
     <div className="product-container">
-      <h1>{route}</h1>
+      <h1>{route.category}</h1>
       <div className="center-container">
-        {images.map((url, i) => (
-          <img key={i} className="product-image" src={url} alt={`img-${i}`} />
+        {images.map((img) => (
+          <img
+            key={img._id}
+            className="product-image"
+            src={`data:${img.contentType};base64,${img.data}`}
+            alt={img.name}
+          />
         ))}
       </div>
     </div>
