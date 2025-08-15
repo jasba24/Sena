@@ -31,10 +31,13 @@ span {
 .footer-link {
   display: flex;
 }
+.footer-link span {
+  font-family: serif;
+}
 
 @media (max-width: 800px) {
   .footer span {
-    font-size: 20px;
+    font-size: 30px;
   }
   .footer .logo {
     display: none;
@@ -61,6 +64,9 @@ span {
   .footer img {
     width: 40px;
     height: 40px;
+  }
+  .footer-link span {
+    font-size: 25px;
   }
 }
 

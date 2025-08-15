@@ -158,17 +158,10 @@ h2 {
   .catalog-container {
     flex-direction: column;
   }
-  .section-container {
-    overflow-x: hidden;
-    flex-direction: column;
-  }
-  .section-container img {
-    height: 500px;
-  }
   .section-container h2 {
-    font-size: 40px;
+    font-size: 30px;
   }
   .buy-button {
-    font-size: 40px;
+    font-size: 20px;
   }
 }

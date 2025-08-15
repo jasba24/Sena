@@ -14,7 +14,7 @@ function Footer() {
       <div className="footer-link">
         <a className="phone" href="https://wa.link/wg8v7o" target="_blank">
           <img src={whatsapp} alt="whatsapp-icon" />
-          +57 320 545 1804
+          <span>+57 320 545 1804</span>
         </a>
       </div>
     </div>
