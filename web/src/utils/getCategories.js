@@ -22,7 +22,7 @@ export function getCategories() {
         "Tulas",
         "Bolsos de Mano",
         "Mochila Wayuu",
-        "Morral de Tela",
+        "Morrales",
       ],
     ],
   }

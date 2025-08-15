@@ -13,7 +13,7 @@ function Menu() {
     setShowMenu(!showMenu)
   }
 
-  const handleLogout = (toggleMenu) => {
+  const handleLogout = () => {
     logout()
     navigate("/")
   }
