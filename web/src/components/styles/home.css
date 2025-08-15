@@ -168,12 +168,6 @@ h2 {
   .catalog-container {
     flex-direction: column;
   }
-  .gallery-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .gallery-container>div>button {
-    font-size: 12px;
-  }
   .section-container h2 {
     font-size: 30px;
   }
