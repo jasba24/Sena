@@ -10,6 +10,7 @@ const HandlerError = require("./middleware/HandlerError")
 const imagesRouter = require("./controllers/images")
 const usersRouter = require("./controllers/users")
 const loginRouter = require("./controllers/login")
+const categoriesRouter = require("./controllers/categories")
 
 
 const app = express()
@@ -18,6 +19,7 @@ app.use(cors())
 app.use(logger)
 
 app.use("/api/images", imagesRouter)
+app.use("/api/categories", categoriesRouter)
 
 app.use(express.json())
 app.use("/api/users", usersRouter)
