@@ -2,9 +2,11 @@ import React, { useState } from "react"
 import { login } from "../../services/login"
 import { setToken } from "../../services/images"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../context/AuthContext"
 
 function LoginForm({ handleErrorMessage }) {
   const navigate = useNavigate()
+  const { loginContext } = useAuth()
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [submitMessage, setSubmitMessage] = useState(null)
@@ -14,7 +16,7 @@ function LoginForm({ handleErrorMessage }) {
 
     try {
       const user = await login({ username, password })
-      window.localStorage.setItem("loggedUser", JSON.stringify(user))
+      loginContext(user)
       setToken(user.token)
       setUsername("")
       setPassword("")

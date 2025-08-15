@@ -2,18 +2,19 @@ import { useState } from "react"
 import profile from "../../assets/menu.png"
 import "../styles/menu.css"
 import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "../../context/AuthContext"
 
 function Menu() {
   const [showMenu, setShowMenu] = useState(false)
   const navigate = useNavigate()
+  const { logout } = useAuth()
 
   const toggleMenu = () => {
     setShowMenu(!showMenu)
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem("loggedUser")
-    setShowMenu(!showMenu)
+  const handleLogout = (toggleMenu) => {
+    logout()
     navigate("/")
   }
 
