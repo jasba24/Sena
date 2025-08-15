@@ -54,7 +54,6 @@ h2 {
 .gallery-container {
   display: flex;
   justify-content: space-between;
-  width: 1000px;
   margin: 0 auto 20px;
 }
 
@@ -154,21 +153,38 @@ h2 {
   }
 }
 
+@media (max-width: 900px) {
+  .gallery-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .gallery-container>div:nth-child(4) {
+    grid-column: 2 / 3;
+  }
+}
+
 @media (max-width: 700px) {
   .catalog-container {
     flex-direction: column;
   }
-  .section-container {
-    overflow-x: hidden;
-    flex-direction: column;
+  .gallery-container {
+    grid-template-columns: repeat(2, 1fr);
   }
-  .section-container img {
-    height: 500px;
+  .gallery-container>div>button {
+    font-size: 12px;
   }
   .section-container h2 {
-    font-size: 40px;
+    font-size: 30px;
   }
   .buy-button {
-    font-size: 40px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .gallery-container {
+    display: flex;
+    flex-direction: column;
   }
 }

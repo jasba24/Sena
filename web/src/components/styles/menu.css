@@ -13,12 +13,12 @@
   width: 50px;
   position: absolute;
   right: 10px;
-  top: -15px;
+  top: 15px;
 }
 
 .dropdown-menu {
   position: absolute;
-  top: 40px;
+  top: 20px;
   right: 0;
   background-color: white;
   border: 1px solid #ccc;
@@ -60,4 +60,16 @@
   border: none;
   font-size: 16px;
   cursor: pointer;
+}
+
+@media (max-width: 650px) {
+  .dropdown-menu {
+    width: 150px;
+    top: 35px;
+  }
+  .menu-option {
+    font-size: 15px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }

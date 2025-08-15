@@ -3,13 +3,7 @@ body {
   padding: 0;
 }
 
-main {
-  margin: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
+
 main div img {
   border: 20px solid #00FFD1;
   
@@ -100,6 +94,14 @@ input {
   }
   main img {
     max-width: 89%;
+  }
+    .black-title {
+    font-size: 30px;
+  }
+  #buttonSubmit {
+    font-size: 25px;
+    width: 150px;
+    margin-top: 0;
   }
 }
 
