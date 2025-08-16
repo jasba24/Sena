@@ -4,6 +4,7 @@ import AddingButton from "./addingButton"
 import DeleteButton from "./deleteButton"
 import SelectionButtons from "./SelectionButtons"
 import { getImagesByCategory } from "../../services/images"
+import EditingButton from "../categories/editingButton"
 
 function Gallery() {
   const route = useParams()
@@ -56,22 +57,30 @@ function Gallery() {
           onUploadComplete={() => setRefreshFlag((prev) => !prev)}
         />
       </div>
-      <div className="center-container">
+      <div className="section-container spacing">
         {images.map((img) => (
-          <>
-            <img
-              key={img._id}
-              className="product-image"
-              src={`data:${img.contentType};base64,${img.data}`}
-              alt={img.name}
-            />
-            <input
-              type="checkbox"
-              checked={selectedImages.includes(img._id)}
-              onChange={() => toggleSelect(img._id)}
-              className="image-checkbox"
-            />
-          </>
+          <section key={img._id}>
+            <div className="checkbox-wrapper">
+              <img
+                className="product-image"
+                src={`data:${img.contentType};base64,${img.data}`}
+                alt={img.name}
+                onClick={() => handleImageClick(img)}
+              />
+              <input
+                type="checkbox"
+                checked={selectedImages.includes(img._id)}
+                onChange={() => toggleSelect(img._id)}
+                className="image-checkbox"
+              />
+              <EditingButton
+                onUploadComplete={() => setRefreshFlag((prev) => !prev)}
+                image={img}
+              />
+            </div>
+            <h2>${img.price}</h2>
+            <button className="buy-button">Agregar al carrito</button>
+          </section>
         ))}
       </div>
     </div>

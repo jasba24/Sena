@@ -34,3 +34,19 @@ export const deleteImages = (idsArray) => {
 
   return axios.delete(baseURL, config)
 }
+
+export const updateImage = (updatedObject) => {
+  const config = {
+    headers: {
+      Authorization: token,
+      "Content-Type": "multipart/form-data",
+    },
+  }
+
+  const { id, formData } = updatedObject
+
+  return axios.put(`${baseURL}/${id}`, formData, config).then((res) => {
+    const { data } = res
+    return data
+  })
+}
