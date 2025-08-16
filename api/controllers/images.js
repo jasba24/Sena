@@ -13,6 +13,7 @@ imagesRouter.get("/", async (req, res) => {
     _id: img._id,
     name: img.name,
     category: img.category,
+    price: img.price,
     contentType: img.contentType,
     data: Buffer.from(img.data).toString("base64"), // ← Aquí está la magia
   }))
@@ -28,6 +29,7 @@ imagesRouter.get("/:id", async (req, res, next) => {
           _id: image._id,
           name: image.name,
           category: image.category,
+          price: img.price,
           contentType: image.contentType,
           data: Buffer.from(image.data).toString("base64"),
         }
@@ -49,6 +51,7 @@ imagesRouter.get("/category/:category", async (req, res, next) => {
       _id: img._id,
       name: img.name,
       category: img.category,
+      price: img.price,
       contentType: img.contentType,
       data: Buffer.from(img.data).toString("base64"), // ← Aquí está la magia
     }))
@@ -92,9 +95,10 @@ imagesRouter.delete("/", express.json(), userExtractor, async (req, res) => {
   }
 })
 
-imagesRouter.post("/", upload.any(), async (req, res) => {
+imagesRouter.post("/", userExtractor, upload.any(), async (req, res) => {
   try {
-    const { category } = req.body
+    const { category, price } = req.body
+
     const files = req.files || []
 
     if (files.length === 0) {
@@ -106,6 +110,7 @@ imagesRouter.post("/", upload.any(), async (req, res) => {
       data: file.buffer,
       contentType: file.mimetype,
       category,
+      price,
     }))
 
     await Image.insertMany(imageDocs)
@@ -121,5 +126,39 @@ imagesRouter.post("/", upload.any(), async (req, res) => {
     })
   }
 })
+
+imagesRouter.put(
+  "/:id",
+  express.json(),
+  userExtractor,
+  upload.single("image"),
+  async (req, res) => {
+    console.log(req.body, req.file)
+
+    try {
+      const updates = { price: req.body.price }
+      if (req.file) {
+        updates.data = req.file.buffer
+        updates.contentType = req.file.mimetype
+      }
+
+      console.log(updates)
+
+      const updated = await Image.findByIdAndUpdate(req.params.id, updates, {
+        new: true,
+      })
+      if (!updated) {
+        return res
+          .status(404)
+          .json({ message: "No se encontró la imagen con ese ID" })
+      }
+      res.status(200).json(updated)
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: "Error al actualizar imagen", details: error.message })
+    }
+  }
+)
 
 module.exports = imagesRouter
