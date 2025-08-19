@@ -11,7 +11,7 @@ function ImageContainer() {
       setImages(images)
     }
     fetchImages()
-  })
+  }, [route.category])
 
   return (
     <div className="product-container">

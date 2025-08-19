@@ -1,90 +1,76 @@
-import React, { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import AddingButton from "./addingButton"
-import DeleteButton from "./deleteButton"
-import SelectionButtons from "./SelectionButtons"
-import { getImagesByCategory } from "../../services/images"
+import { GalleryProvider, useGallery } from "../../context/GalleryContext"
+import ButtonsContainer from "./buttonsContainer"
 import EditingButton from "../categories/editingButton"
+import Loading from "./../layout/loading"
+import { deleteImages, setToken } from "../../services/images"
+import AddingModal from "./addingModal"
 
-function Gallery() {
-  const route = useParams()
+function GalleryContent() {
+  const {
+    images,
+    selectedImages,
+    setSelectedImages,
+    setRefreshFlag,
+    category,
+  } = useGallery()
 
-  const [images, setImages] = useState([])
-  const [selectedImages, setSelectedImages] = useState([])
-  const [refreshFlag, setRefreshFlag] = useState(false)
+  const token = JSON.parse(localStorage.getItem("loggedUser"))?.token
+  setToken(token)
 
   const toggleSelect = (imageId) => {
     setSelectedImages((prevSelected) => {
-      if (prevSelected.includes(imageId)) {
-        return prevSelected.filter((id) => id !== imageId)
-      } else {
-        return [...prevSelected, imageId]
-      }
+      return prevSelected.includes(imageId)
+        ? prevSelected.filter((id) => id !== imageId)
+        : [...prevSelected, imageId]
     })
   }
-
-  useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        const responseImages = await getImagesByCategory(route.category)
-        setImages(responseImages)
-      } catch (error) {
-        console.error("Error al obtener imágenes:", error)
-      }
-    }
-
-    fetchImages()
-  }, [refreshFlag])
-
   return (
     <div className="product-container">
-      <h1>{route.category}</h1>
-      <div className="gallery-container">
-        <AddingButton
-          onUploadComplete={() => setRefreshFlag((prev) => !prev)}
-        />
-        <SelectionButtons
-          handleSelectedImages={(value) => {
-            setSelectedImages(value)
-          }}
-          images={images}
-        />
-        <DeleteButton
-          handleSelectedImages={(value) => {
-            setSelectedImages(value)
-          }}
-          selectedImages={selectedImages}
-          onUploadComplete={() => setRefreshFlag((prev) => !prev)}
-        />
-      </div>
+      <h1>{category}</h1>
+      <ButtonsContainer
+        items={images}
+        selectedItems={selectedImages}
+        setSelectedItems={setSelectedImages}
+        onUploadComplete={() => setRefreshFlag((prev) => !prev)}
+        deleteFunction={deleteImages}
+        entityName="imágenes"
+        buttonLabel="Agregar Imágen y Precio"
+        ModalComponent={AddingModal}
+      />
       <div className="section-container spacing">
-        {images.map((img) => (
-          <section key={img._id}>
-            <div className="checkbox-wrapper">
-              <img
-                className="product-image"
-                src={`data:${img.contentType};base64,${img.data}`}
-                alt={img.name}
-                onClick={() => handleImageClick(img)}
-              />
-              <input
-                type="checkbox"
-                checked={selectedImages.includes(img._id)}
-                onChange={() => toggleSelect(img._id)}
-                className="image-checkbox"
-              />
-              <EditingButton
-                onUploadComplete={() => setRefreshFlag((prev) => !prev)}
-                image={img}
-              />
-            </div>
-            <h2>${img.price}</h2>
-            <button className="buy-button">Agregar al carrito</button>
-          </section>
-        ))}
+        {images.length === 0 ? (
+          <Loading message="Cargando productos..." />
+        ) : (
+          images.map((img) => (
+            <section key={img._id}>
+              <div className="checkbox-wrapper">
+                <img
+                  className="product-image"
+                  src={`data:${img.contentType};base64,${img.data}`}
+                  alt={img.name}
+                />
+                <input
+                  type="checkbox"
+                  checked={selectedImages.includes(img._id)}
+                  onChange={() => toggleSelect(img._id)}
+                  className="image-checkbox"
+                />
+                <EditingButton type="image" data={img} />
+              </div>
+              <h2>${img.price}</h2>
+              <button className="buy-button">Agregar al carrito</button>
+            </section>
+          ))
+        )}
       </div>
     </div>
   )
 }
 
-export default Gallery
+export default function Gallery() {
+  return (
+    <GalleryProvider>
+      <GalleryContent />
+    </GalleryProvider>
+  )
+}
