@@ -61,21 +61,12 @@ imagesRouter.get("/category/:category", async (req, res, next) => {
   }
 })
 
-imagesRouter.delete("/:id", userExtractor, async (req, res) => {
-  try {
-    const deleted = await Image.findByIdAndDelete(req.params.id)
-    if (!deleted) {
-      return res.status(404).json({ message: "Imagen no encontrada" })
-    }
-
-    res.status(200).json({ message: "Imagen eliminada correctamente" })
-  } catch (err) {
-    next(err)
-  }
-})
-
 imagesRouter.delete("/", express.json(), userExtractor, async (req, res) => {
-  const { ids } = req.body
+  let { ids } = req.body
+
+  if (typeof ids === "string") {
+    ids = [ids]
+  }
 
   if (!Array.isArray(ids) || ids.length === 0) {
     return res
@@ -133,16 +124,12 @@ imagesRouter.put(
   userExtractor,
   upload.single("image"),
   async (req, res) => {
-    console.log(req.body, req.file)
-
     try {
       const updates = { price: req.body.price }
       if (req.file) {
         updates.data = req.file.buffer
         updates.contentType = req.file.mimetype
       }
-
-      console.log(updates)
 
       const updated = await Image.findByIdAndUpdate(req.params.id, updates, {
         new: true,
