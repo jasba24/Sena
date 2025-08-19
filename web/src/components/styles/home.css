@@ -10,6 +10,12 @@ h2 {
 .hero-image {
   width: 100%;
 }
+
+#categories-image {
+  width: 200px;
+  height: 200px;
+}
+
 .image-container {
   width: 100%;
   height: 100%;

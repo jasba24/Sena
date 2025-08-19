@@ -1,16 +1,18 @@
 import React, { useState } from "react"
-import AddingModal from "./addingModal"
+import { useLocation } from "react-router-dom"
 
-function AddingButton({ onUploadComplete }) {
+function AddingButton({ ModalComponent, onUploadComplete, buttonLabel }) {
   const [showModal, setShowModal] = useState(false)
+  const categoryPath = useLocation().pathname.split("/")[1]
 
   return (
     <div>
       <button className="buy-button" onClick={() => setShowModal(true)}>
-        Agregar Imagen y Precio
+        {buttonLabel}
       </button>
       {showModal && (
-        <AddingModal
+        <ModalComponent
+          type={categoryPath === "category" ? "category" : "image"}
           onClose={() => setShowModal(false)}
           onUploadComplete={onUploadComplete}
         />

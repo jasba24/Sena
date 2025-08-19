@@ -1,35 +1,38 @@
 import React, { useState } from "react"
-import { deleteImages, setToken } from "../../services/images"
+import { useCategories } from "../../context/CategoryContext"
 
 function DeleteButton({
-  selectedImages,
-  handleSelectedImages,
+  selectedItems,
+  handleSelectedItems,
   onUploadComplete,
+  deleteFunction,
+  entityName,
 }) {
-  const token = JSON.parse(localStorage.getItem("loggedUser")).token
-  setToken(token)
   const [feedback, setFeedback] = useState("")
+  const categoryContext = entityName === "categorías" ? useCategories() : null
+
   const deleteSelected = async () => {
-    if (selectedImages.length === 0) return
+    if (selectedItems.length === 0) return
 
-    setFeedback("Eliminando imágenes...")
+    setFeedback(`Eliminando ${entityName}...`)
     try {
-      await deleteImages(selectedImages)
+      await Promise.all(selectedItems.map((id) => deleteFunction(id)))
 
-      setFeedback("Imágenes eliminadas exitosamente ✅")
+      setFeedback(`${entityName} eliminadas exitosamente ✅`)
 
-      handleSelectedImages((prevImages) =>
-        prevImages.filter((img) => !selectedImages.includes(img.id))
+      handleSelectedItems((prevItems) =>
+        prevItems.filter((item) => !selectedItems.includes(item.id))
       )
 
-      handleSelectedImages([])
+      handleSelectedItems([])
       setTimeout(() => {
         setFeedback(null)
-      }, 5000)
+      }, 4000)
       onUploadComplete?.()
+      categoryContext?.setRefreshFlag?.((prev) => !prev)
     } catch (error) {
-      console.error("Error al eliminar imagenes", error)
-      setFeedback("Hubo un error al eliminar las imágenes ❌")
+      console.error(`Error al eliminar ${entityName}`, error)
+      setFeedback(`Hubo un error al eliminar ${entityName} ❌`, error)
     }
   }
   return (
@@ -37,9 +40,9 @@ function DeleteButton({
       <button
         className="buy-button red"
         onClick={deleteSelected}
-        disabled={selectedImages.length === 0}
+        disabled={selectedItems.length === 0}
       >
-        Eliminar imagenes seleccionadas
+        Eliminar {entityName} seleccionadas
       </button>
       {feedback && <div className="submitMessage">{feedback}</div>}
     </div>

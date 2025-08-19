@@ -1,13 +1,13 @@
 import React from "react"
 
-function SelectionButtons({ handleSelectedImages, images }) {
+function SelectionButtons({ handleSelectedItems, items }) {
   const selectAll = () => {
-    const allIds = images.map((img) => img._id)
-    handleSelectedImages(allIds)
+    const allIds = items.map((item) => item._id)
+    handleSelectedItems(allIds)
   }
 
   const deselectAll = () => {
-    handleSelectedImages([])
+    handleSelectedItems([])
   }
 
   return (

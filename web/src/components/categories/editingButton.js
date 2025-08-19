@@ -2,21 +2,72 @@ import React, { useEffect, useState } from "react"
 import editIcon from "../../assets/editIcon.png"
 import "../styles/modal.css"
 import { updateImage } from "../../services/images"
+import { useGallery } from "../../context/GalleryContext"
+import { updateCategory } from "../../services/categories"
+import { useCategories } from "../../context/CategoryContext"
 
-function EditingButton({ image, onUploadComplete }) {
+function EditingButton({ type = "image", data, setCategories }) {
   const [showModal, setShowModal] = useState(false)
   const [file, setFile] = useState(null)
-  const [price, setPrice] = useState(image.price || "")
+  const [price, setPrice] = useState(data.price || "")
+  const [title, setTitle] = useState(data.title || "")
+  const [category, setCategory] = useState(data.category || "")
+  const galleryContext = type === "image" ? useGallery() : null
+  const categoryContext = type === "category" ? useCategories() : null
 
   const handleSubmit = async () => {
     const formData = new FormData()
-    formData.append("id", image._id)
-    formData.append("price", price)
-    if (file) formData.append("image", file)
 
     try {
-      await updateImage({ id: image._id, formData })
-      onUploadComplete()
+      if (file) formData.append("image", file)
+      if (type === "image") {
+        formData.append("id", data._id)
+        formData.append("price", price)
+        await updateImage({ id: data._id, formData })
+        galleryContext?.setRefreshFlag?.((prev) => !prev)
+      }
+
+      if (type === "category") {
+        formData.append("title", title)
+        formData.append("category", category)
+        const updatedCat = (await updateCategory({ id: data._id, formData }))
+          .data
+
+        if (categoryContext.setCategories) {
+          categoryContext.setCategories((prev) => {
+            //moveItemBetweenGroups(prev, updatedCat, data.category, updatedCat.category)
+            const oldKey = data.category
+            const newKey = updatedCat.category
+
+            const oldArray = [...(prev[oldKey] || [])]
+            const indexToRemove = oldArray.findIndex(
+              (c) => String(c._id) === String(updatedCat._id)
+            )
+            if (indexToRemove !== -1) {
+              oldArray.splice(indexToRemove, 1)
+            }
+
+            const newArray = [...(prev[newKey] || [])]
+            const alredyExists = newArray.some(
+              (c) => String(c._id) === String(updatedCat._id)
+            )
+
+            if (!alredyExists) {
+              newArray.push(updatedCat)
+            }
+
+            const nuevoEstado = {
+              ...prev,
+              [oldKey]: oldArray,
+              [newKey]: newArray,
+            }
+
+            return nuevoEstado
+          })
+        }
+        categoryContext?.setRefreshFlag?.((prev) => !prev)
+      }
+
       setShowModal(false)
     } catch (error) {
       console.error("Error al actualizar imagen:", error)
@@ -25,8 +76,10 @@ function EditingButton({ image, onUploadComplete }) {
 
   const previewSrc = file
     ? URL.createObjectURL(file)
-    : image?.data && image?.contentType
-    ? `data:${image.content};base64,${image.data}`
+    : type === "image" && data?.data && data?.contentType
+    ? `data:${data.contentType};base64,${data.data}`
+    : typeof data.image === "string" && data.image.startsWith("data:")
+    ? data.image
     : null
 
   return (
@@ -36,7 +89,11 @@ function EditingButton({ image, onUploadComplete }) {
         {showModal && (
           <div className="modal-overlay">
             <div className="modal-content">
-              <h3>Editar imagen y precio</h3>
+              <h3>
+                {type === "image"
+                  ? "Editar imagen y precio"
+                  : "Editar categoría"}
+              </h3>
               <form
                 onSubmit={(e) => {
                   e.preventDefault()
@@ -55,14 +112,38 @@ function EditingButton({ image, onUploadComplete }) {
                   accept="image/*"
                   onChange={(e) => setFile(e.target.files[0])}
                 />
-                <input
-                  className="input-price"
-                  type="text"
-                  placeholder="Precio"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  required
-                />
+                {type === "image" && (
+                  <input
+                    className="input-price"
+                    type="text"
+                    placeholder="Precio"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    required
+                  />
+                )}
+                {type === "category" && (
+                  <>
+                    <input
+                      className="input-price"
+                      type="text"
+                      placeholder="Título"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      required
+                    />
+                    <select
+                      className="input-price"
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      required
+                    >
+                      <option value="">Selecciona una categoría</option>
+                      <option value="Calzado">Calzado</option>
+                      <option value="Bolsos">Bolsos</option>
+                    </select>
+                  </>
+                )}
                 <button className="buy-button" type="submit">
                   Guardar cambios
                 </button>
