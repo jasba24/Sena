@@ -25,6 +25,17 @@ export const createCategory = (newCategory) => {
   })
 }
 
+export const updateCategory = ({ id, formData }) => {
+  const config = {
+    headers: {
+      Authorization: token,
+      "Content-Type": "multipart/form-data",
+    },
+  }
+
+  return axios.put(`${baseURL}/${id}`, formData, config).then((res) => res.data)
+}
+
 export const deleteCategory = (id) => {
   const config = {
     headers: {

@@ -1,17 +1,42 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 import { Link } from "react-router-dom"
 
-function Product(props) {
-  // eslint-disable-next-line react/prop-types
-  const { image, name, id } = props
+function Product({
+  id,
+  image,
+  name,
+  editable,
+  selected,
+  onSelect,
+  EditingComponent,
+}) {
+
   return (
     <section>
-      <img src={image} alt="referencia del producto" />
-      <h2>{name}</h2>
-      <Link to={`/${id}`}>
-        <button className="buy-button">ver productos</button>
-      </Link>
+      <div className="checkbox-wrapper">
+        <img
+          id="categories-image"
+          className="product-image"
+          src={image}
+          alt="referencia del producto"
+        />
+        {editable && (
+          <>
+            <input
+              type="checkbox"
+              checked={selected}
+              onChange={onSelect}
+              className="image-checkbox"
+            />
+            {EditingComponent}
+          </>
+        )}
+        <h2>{name}</h2>
+        <Link to={`/${id}`}>
+          <button className="buy-button">ver productos</button>
+        </Link>
+      </div>
     </section>
   )
 }
