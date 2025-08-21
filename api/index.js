@@ -11,6 +11,7 @@ const imagesRouter = require("./controllers/images")
 const usersRouter = require("./controllers/users")
 const loginRouter = require("./controllers/login")
 const categoriesRouter = require("./controllers/categories")
+const ordersRouter = require("./controllers/orders")
 
 
 const app = express()
@@ -20,6 +21,7 @@ app.use(logger)
 
 app.use("/api/images", imagesRouter)
 app.use("/api/categories", categoriesRouter)
+app.use("/api/orders", ordersRouter)
 
 app.use(express.json())
 app.use("/api/users", usersRouter)
