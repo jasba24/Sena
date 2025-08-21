@@ -36,6 +36,13 @@ h2 {
   gap: 8px;
 }
 
+#input-client {
+  width: 150px;
+  font-size: 18px;
+  margin: 0 10px;
+  padding: 5px 3%;
+}
+
 .section-container {
   display: flex;
   flex-wrap: wrap;
@@ -186,6 +193,9 @@ h2 {
 
 
 @media (max-width: 1300px) {
+  .section-container section {
+    min-height: 300px;
+  }
   .section-container img {
     height: 200px;
   }

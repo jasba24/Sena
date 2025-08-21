@@ -1,8 +1,8 @@
 import "../styles/header.css"
 import { Link } from "react-router-dom"
 import Menu from "./menu"
-import { useEffect, useState } from "react"
 import { useAuth } from "../../context/AuthContext"
+import cart from "../../assets/cart.png"
 
 function Header() {
   const { user } = useAuth()
@@ -14,7 +14,13 @@ function Header() {
           Marroquineria en cuero de alta calidad directamente de fábrica
         </h1>
       </Link>
-      {user && <Menu />}
+      {user ? (
+        <Menu />
+      ) : (
+        <Link to="/cart">
+          <img src={cart} alt="shooping cart" />{" "}
+        </Link>
+      )}
     </header>
   )
 }
