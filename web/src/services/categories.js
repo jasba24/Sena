@@ -1,5 +1,5 @@
 import axios from "axios"
-const baseURL = "http://localhost:3001/api/categories"
+const baseURL = "https://sena-9yju.onrender.com/api/categories"
 
 let token = null
 
