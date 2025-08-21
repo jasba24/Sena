@@ -9,7 +9,7 @@ function Footer() {
     <div className="footer">
       <img className="logo" src={logo} alt="logo" />
       <div>
-        <span>Variedades Milú Shoes</span>
+        <span>Lina Shoes</span>
       </div>
       <div className="footer-link">
         <a className="phone" href="https://wa.link/wg8v7o" target="_blank">
