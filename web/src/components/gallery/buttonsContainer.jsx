@@ -1,5 +1,5 @@
 import AddingButton from "./addingButton"
-import SelectionButtons from "./SelectionButtons"
+import SelectionButtons from "./selectionButtons"
 import DeleteButton from "./deleteButton"
 
 function ButtonsContainer({
