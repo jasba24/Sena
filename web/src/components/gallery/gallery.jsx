@@ -17,6 +17,15 @@ function GalleryContent() {
   const token = JSON.parse(localStorage.getItem("loggedUser"))?.token
   setToken(token)
 
+  const addToCart = (img) => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || []
+    const exists = cart.some((item) => item._id === img._id)
+    if (!exists) {
+      cart.push(img)
+      localStorage.setItem("cart", JSON.stringify(cart))
+    }
+  }
+
   const toggleSelect = (imageId) => {
     setSelectedImages((prevSelected) => {
       return prevSelected.includes(imageId)
@@ -58,7 +67,9 @@ function GalleryContent() {
                 <EditingButton type="image" data={img} />
               </div>
               <h2>${img.price}</h2>
-              <button className="buy-button">Agregar al carrito</button>
+              <button className="buy-button" onClick={() => addToCart(img)}>
+                Agregar al carrito
+              </button>
             </section>
           ))
         )}
