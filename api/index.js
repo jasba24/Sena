@@ -4,7 +4,7 @@ const express = require("express")
 const cors = require("cors")
 
 const logger = require("./middleware/logger")
-const NotFound = require("./middleware/NotFound")
+const NotFound = require("./middleware/notFound")
 const HandlerError = require("./middleware/HandlerError")
 
 const imagesRouter = require("./controllers/images")
