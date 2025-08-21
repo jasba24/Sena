@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: sena-api
+    env: node
+    rootDir: api
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    autoDeploy: true
