@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: sena-api
+    env: node
+    rootDir: api
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    autoDeploy: true
+    envVars:
+      - key: MONGO_DB_URI
+        value: mongodb+srv://johanbuitrago342:Cwt7pe0u6MNbRolt@cluster0.qeuqlb1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      - key: SECRET
+        value: jasba24
