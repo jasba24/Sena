@@ -15,7 +15,7 @@ function Login() {
     if (user) {
       setToken(user.token)
     }
-  })
+  }, [])
 
   if (errorMessage) {
     return <div className="error">{errorMessage}</div>

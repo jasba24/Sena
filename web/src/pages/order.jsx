@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 
 function Order() {
   const user = JSON.parse(localStorage.getItem("loggedUser"))
+  if (!user) return <Login />
   setToken(user.token)
 
   const { id } = useParams()
@@ -23,8 +24,7 @@ function Order() {
 
   const updateClient = async () => {
     setShowInput(true)
-    const client = document.getElementById("input-client").value
-    await updateOrder(id, { client })
+    await updateOrder(id, { client: order.client })
     setShowInput(false)
   }
 
@@ -55,8 +55,6 @@ function Order() {
 
     getOrder()
   }, [])
-
-  if (!user) return <Login />
 
   if (!order) return <h1 className="red">Pedido no encontrado</h1>
   return (

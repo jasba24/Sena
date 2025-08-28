@@ -18,7 +18,7 @@ function Header() {
         <Menu />
       ) : (
         <Link to="/cart">
-          <img src={cart} alt="shooping cart" />{" "}
+          <img src={cart} alt="Shopping cart" />{" "}
         </Link>
       )}
     </header>
