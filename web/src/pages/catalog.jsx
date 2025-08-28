@@ -1,16 +1,26 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import "../components/styles/shoesList.css"
 import "../components/styles/product.css"
 import CatalogList from "../components/catalog/catalogList"
-import { getCategories } from "../utils/getCategories"
+import { getAllCategories } from "../services/categories"
+
 
 function Catalog() {
-  const validCategories = getCategories().productCategories
   const { category } = useParams()
+  const [validCategories, setValidCategories] = useState([])
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      await getAllCategories().then((data) => {
+        setValidCategories(data.map((cat) => cat.title))
+      })
+    }
+    fetchCategories()
+  })
+
   if (
-    validCategories[0].includes(category) ||
-    validCategories[1].includes(category)
+    validCategories.includes(decodeURIComponent(category))
   ) {
     return (
       <main>
