@@ -7,7 +7,7 @@ import Category from "./pages/category"
 import Catalog from "./pages/catalog"
 import Login from "./pages/login"
 import { CategoryProvider } from "./context/CategoryContext"
-import Shooping from "./pages/shopping"
+import Shopping from "./pages/shopping"
 import Order from "./pages/order"
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
             <Route exact path="/category/:pageId" Component={Category}></Route>
             <Route exact path="/admin/login" Component={Login}></Route>
             <Route exact path="/admin/login/:change" Component={Login}></Route>
-            <Route exact path="/cart" Component={Shooping}></Route>
+            <Route exact path="/cart" Component={Shopping}></Route>
             <Route exact path="/pedido/:id" Component={Order}></Route>
           </Routes>
           <Footer />

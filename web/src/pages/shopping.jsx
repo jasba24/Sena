@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import "../components/styles/shopping.css"
 import { createOrder } from "./../services/orders"
 
-function Shooping() {
+function Shopping() {
   const [loading, setLoading] = useState(false)
   const [cart, setCart] = useState([])
 
@@ -73,4 +73,4 @@ function Shooping() {
   )
 }
 
-export default Shooping
+export default Shopping
