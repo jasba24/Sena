@@ -7,13 +7,11 @@
   width: 32px;
   height: 32px;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 .icon {
   width: 50px;
-  position: absolute;
-  right: 10px;
-  top: 15px;
 }
 
 .dropdown-menu {
