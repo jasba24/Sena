@@ -1,10 +1,11 @@
 import React, { useState } from "react"
 import { login } from "../../services/login"
 import { setToken } from "../../services/images"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
 
 function LoginForm({ handleErrorMessage }) {
+  const location = useLocation()
   const navigate = useNavigate()
   const { loginContext } = useAuth()
   const [username, setUsername] = useState("")
@@ -15,13 +16,21 @@ function LoginForm({ handleErrorMessage }) {
     event.preventDefault()
 
     try {
+      console.log(location)
+
       const user = await login({ username, password })
+      setSubmitMessage("Inicio de sesión Exitoso")
       loginContext(user)
       setToken(user.token)
       setUsername("")
       setPassword("")
-      setSubmitMessage("Inicio de sesión Exitoso")
-      navigate("/")
+      setTimeout(() => {
+        if (location.pathname.includes("pedido")) {
+          navigate(location.pathname)
+        } else {
+          navigate("/")
+        }
+      }, 3000)
     } catch (e) {
       handleErrorMessage("Wrong credentials")
       setTimeout(() => {

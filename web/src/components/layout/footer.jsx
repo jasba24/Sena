@@ -12,7 +12,7 @@ function Footer() {
         <span>Lina Shoes</span>
       </div>
       <div className="footer-link">
-        <a className="phone" href="https://wa.link/wg8v7o" target="_blank">
+        <a className="phone" href="https://wa.link/w8sl8n" target="_blank">
           <img src={whatsapp} alt="whatsapp-icon" />
           <span>+57 320 545 1804</span>
         </a>

@@ -2,15 +2,15 @@ import { useParams } from "react-router-dom"
 import { getOrderById, setToken, updateOrder } from "../services/orders"
 import Login from "./login"
 import { useEffect, useState } from "react"
+import Loading from "./../components/layout/loading"
 
 function Order() {
-  const user = JSON.parse(localStorage.getItem("loggedUser"))
-  if (!user) return <Login />
-  setToken(user.token)
-
+  const [loading, setLoading] = useState(true)
   const { id } = useParams()
   const [order, setOrder] = useState(null)
   const [showInput, setShowInput] = useState(false)
+  const [editedClient, setEditedClient] = useState("")
+  const user = JSON.parse(localStorage.getItem("loggedUser"))
 
   const bufferToBase64 = (buffer) => {
     if (buffer?.image?.data?.data) {
@@ -22,10 +22,19 @@ function Order() {
     }
   }
 
+  const toggleShowInput = () => {
+    setEditedClient(order?.client || "")
+    setShowInput(!showInput)
+  }
+
   const updateClient = async () => {
-    setShowInput(true)
     await updateOrder(id, { client: order.client })
-    setShowInput(false)
+    setOrder((prev) => ({
+      ...prev,
+      client: editedClient,
+    }))
+
+    toggleShowInput()
   }
 
   const handleDelete = async (id) => {
@@ -49,38 +58,64 @@ function Order() {
 
   useEffect(() => {
     const getOrder = async () => {
-      const response = await getOrderById(id)
-      setOrder(response)
+      try {
+        const response = await getOrderById(id)
+        setOrder(response)
+      } catch (error) {
+        console.error("Error al obtener el pedido:", error)
+      } finally {
+        setLoading(false)
+      }
     }
 
     getOrder()
   }, [])
 
+  if (!user) return <Login />
+  setToken(user.token)
+  if (loading) return <Loading message="Cargando pedido..." />
   if (!order) return <h1 className="red">Pedido no encontrado</h1>
+  if (order.products.length === 0) {
+    return (
+      <>
+        {order.client && <h1>Pedido de {order.client}</h1>}
+        <h1>Este pedido no contiene productos actualmente</h1>
+      </>
+    )
+  }
+
   return (
     <div>
       <h1>
         Pedido de {order?.client}
         {showInput && (
-          <input
-            id="input-client"
-            type="text"
-            placeholder="Nombre del cliente"
-            value={order?.client || ""}
-            required
-            onChange={(e) =>
-              setOrder((prev) => ({
-                ...prev,
-                client: e.target.value,
-              }))
-            }
-          />
+          <>
+            <input
+              id="input-client"
+              type="text"
+              placeholder="Nombre del cliente"
+              value={editedClient}
+              required
+              onChange={(e) => setEditedClient(e.target.value)}
+            />
+            <button onClick={updateClient} className="buy-button green">
+              Guardar cliente
+            </button>
+          </>
         )}
       </h1>
       <div className="center-container">
-        <button onClick={updateClient} className="buy-button">
-          {showInput ? "Agregar cliente" : "Modificar cliente"}
-        </button>
+        {!showInput && (
+          <button onClick={toggleShowInput} className="buy-button">
+            Modificar cliente
+          </button>
+        )}
+        <p></p>
+        {showInput && (
+          <button onClick={toggleShowInput} className="buy-button">
+            Cancelar
+          </button>
+        )}
       </div>
       <div className="section-container">
         {order?.products.map((item, i) => (
