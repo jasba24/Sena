@@ -4,7 +4,6 @@ import { useCategories } from "../../context/CategoryContext"
 function DeleteButton({
   selectedItems,
   handleSelectedItems,
-  onUploadComplete,
   deleteFunction,
   entityName,
 }) {
@@ -28,8 +27,11 @@ function DeleteButton({
       setTimeout(() => {
         setFeedback(null)
       }, 4000)
-      onUploadComplete?.()
-      categoryContext?.setRefreshFlag?.((prev) => !prev)
+
+      categoryContext?.setRefreshFlag?.((prev) => {
+        console.log("Refresh flag cambiado:", !prev)
+        return !prev
+      })
     } catch (error) {
       console.error(`Error al eliminar ${entityName}`, error)
       setFeedback(`Hubo un error al eliminar ${entityName} ❌`, error)

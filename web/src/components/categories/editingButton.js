@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import editIcon from "../../assets/editIcon.png"
 import "../styles/modal.css"
 import { updateImage } from "../../services/images"
@@ -12,6 +12,7 @@ function EditingButton({ type = "image", data, setCategories }) {
   const [price, setPrice] = useState(data.price || "")
   const [title, setTitle] = useState(data.title || "")
   const [category, setCategory] = useState(data.category || "")
+  const [feedback, setFeedback] = useState("")
   const galleryContext = type === "image" ? useGallery() : null
   const categoryContext = type === "category" ? useCategories() : null
 
@@ -35,7 +36,6 @@ function EditingButton({ type = "image", data, setCategories }) {
 
         if (categoryContext.setCategories) {
           categoryContext.setCategories((prev) => {
-            //moveItemBetweenGroups(prev, updatedCat, data.category, updatedCat.category)
             const oldKey = data.category
             const newKey = updatedCat.category
 
@@ -65,12 +65,17 @@ function EditingButton({ type = "image", data, setCategories }) {
             return nuevoEstado
           })
         }
-        categoryContext?.setRefreshFlag?.((prev) => !prev)
+        setTimeout(() => {
+          categoryContext?.setRefreshFlag?.((prev) => !prev)
+        }, 3000)
       }
-
-      setShowModal(false)
+      setFeedback("Imagen editada correctamente")
+      setTimeout(() => {
+        setShowModal(false)
+      }, 3000)
     } catch (error) {
       console.error("Error al actualizar imagen:", error)
+      setFeedback("Error al actualizar imagen ❌")
     }
   }
 
@@ -158,6 +163,7 @@ function EditingButton({ type = "image", data, setCategories }) {
               >
                 Cancelar
               </button>
+              {feedback && <div className="submitMessage">{feedback}</div>}
             </div>
           </div>
         )}

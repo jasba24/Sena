@@ -31,8 +31,9 @@ function AddingModal({ type = "image", onClose, onUploadComplete }) {
         formData.append("category", routeCategory)
         formData.append("price", price)
 
-        await createImage(formData)
+        const created = await createImage(formData)
         setFeedback("Imagen subida exitosamente ✅")
+        onUploadComplete?.(created.data)
       }
 
       if (type === "category") {

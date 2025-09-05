@@ -19,7 +19,12 @@ function ButtonsContainer({
         ModalComponent={ModalComponent}
         onUploadComplete={onUploadComplete}
       />
-      <SelectionButtons handleSelectedItems={setSelectedItems} items={items} />
+      {entityName === "imágenes" && (
+        <SelectionButtons
+          handleSelectedItems={setSelectedItems}
+          items={items}
+        />
+      )}
       <DeleteButton
         selectedItems={selectedItems}
         handleSelectedItems={setSelectedItems}
