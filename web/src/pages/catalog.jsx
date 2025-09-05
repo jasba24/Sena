@@ -4,24 +4,28 @@ import "../components/styles/shoesList.css"
 import "../components/styles/product.css"
 import CatalogList from "../components/catalog/catalogList"
 import { getAllCategories } from "../services/categories"
-
+import Loading from "../components/layout/loading"
 
 function Catalog() {
   const { category } = useParams()
   const [validCategories, setValidCategories] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchCategories = async () => {
       await getAllCategories().then((data) => {
         setValidCategories(data.map((cat) => cat.title))
       })
+      setLoading(false)
     }
     fetchCategories()
-  })
+  }, [])
 
-  if (
-    validCategories.includes(decodeURIComponent(category))
-  ) {
+  if (loading) {
+    return <Loading message="Cargando categoria..." />
+  }
+
+  if (validCategories.includes(decodeURIComponent(category))) {
     return (
       <main>
         <div className="center-container">

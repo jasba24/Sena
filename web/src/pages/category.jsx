@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import "../components/styles/product.css"
 import "../components/styles/modal.css"
 import Categories from "../components/catalog/categories"
@@ -13,7 +13,7 @@ import AddingModal from "../components/gallery/addingModal"
 
 function Category({}) {
   const productCategories = getCategories().categories
-  const { categories, setCategories, loading } = useCategories()
+  const { setRefreshFlag, categories, loading } = useCategories()
   const [selectedCategories, setSelectedCategories] = useState([])
   const user = localStorage.getItem("loggedUser")
   const token = JSON.parse(localStorage.getItem("loggedUser"))?.token
@@ -39,16 +39,7 @@ function Category({}) {
           items={categories}
           selectedItems={selectedCategories}
           setSelectedItems={setSelectedCategories}
-          onUploadComplete={(newCat) => {
-            setCategories((prev) => {
-              const key = newCat.category
-              const updatedList = [...(prev[key] || []), newCat]
-              return {
-                ...prev,
-                [key]: updatedList,
-              }
-            })
-          }}
+          onUploadComplete={() => setRefreshFlag((prev) => !prev)}
           deleteFunction={deleteCategory}
           entityName="categorías"
           buttonLabel="Agregar Categoría"

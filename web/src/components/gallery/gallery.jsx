@@ -4,6 +4,7 @@ import EditingButton from "../categories/editingButton"
 import Loading from "./../layout/loading"
 import { deleteImages, setToken } from "../../services/images"
 import AddingModal from "./addingModal"
+import { useCart } from "../../context/CartContext"
 
 function GalleryContent() {
   const {
@@ -14,17 +15,10 @@ function GalleryContent() {
     category,
   } = useGallery()
 
+  const { addToCart } = useCart()
+
   const token = JSON.parse(localStorage.getItem("loggedUser"))?.token
   setToken(token)
-
-  const addToCart = (img) => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || []
-    const exists = cart.some((item) => item._id === img._id)
-    if (!exists) {
-      cart.push(img)
-      localStorage.setItem("cart", JSON.stringify(cart))
-    }
-  }
 
   const toggleSelect = (imageId) => {
     setSelectedImages((prevSelected) => {
@@ -46,6 +40,7 @@ function GalleryContent() {
         buttonLabel="Agregar Imágen y Precio"
         ModalComponent={AddingModal}
       />
+      <h1>Cantidad de imágenes seleccionadas: {selectedImages.length}</h1>
       <div className="section-container spacing">
         {images.length === 0 ? (
           <Loading message="Cargando productos..." />
