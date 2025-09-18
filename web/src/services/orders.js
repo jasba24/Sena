@@ -8,6 +8,16 @@ export const setToken = (newToken) => {
   token = `Bearer ${newToken}`
 }
 
+export const getAllOrders = () => {
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+  }
+
+  return axios.get(baseURL, config).then(({ data }) => data)
+}
+
 export const getOrderById = (id) => {
   return axios.get(`${baseURL}/${id}`).then(({ data }) => data)
 }
@@ -33,7 +43,6 @@ export const createOrder = async (products) => {
   }
 
   const response = await axios.post(baseURL, payload, config)
-  console.log(response.data)
 
   return response.data
 }
@@ -47,4 +56,14 @@ export const updateOrder = async (id, updates) => {
   }
 
   return axios.patch(`${baseURL}/${id}`, updates, config)
+}
+
+export const deleteOrder = async (id) => {
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+  }
+
+  return axios.delete(`${baseURL}/${id}`, config)
 }

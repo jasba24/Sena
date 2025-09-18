@@ -11,6 +11,7 @@ import Order from "./pages/order"
 
 import { CategoryProvider } from "./context/CategoryContext"
 import { CartProvider } from "./context/CartContext"
+import OrderManagement from "./pages/orderManagement"
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
               ></Route>
               <Route exact path="/cart" Component={Shopping}></Route>
               <Route exact path="/pedido/:id" Component={Order}></Route>
+              <Route exact path="/pedidos" Component={OrderManagement}></Route>
             </Routes>
             <Footer />
           </CartProvider>
