@@ -1,10 +1,10 @@
-import { useParams } from "react-router-dom"
+import { Navigate, useLocation, useParams } from "react-router-dom"
 import { getOrderById, setToken, updateOrder } from "../services/orders"
-import Login from "./login"
 import { useEffect, useState } from "react"
 import Loading from "./../components/layout/loading"
 
 function Order() {
+  const location = useLocation()
   const [loading, setLoading] = useState(true)
   const { id } = useParams()
   const [order, setOrder] = useState(null)
@@ -71,7 +71,7 @@ function Order() {
     getOrder()
   }, [])
 
-  if (!user) return <Login />
+  if (!user) return <Navigate to={"/admin/login"} state={{ from: location }} replace />
   setToken(user.token)
   if (loading) return <Loading message="Cargando pedido..." />
   if (!order) return <h1 className="red">Pedido no encontrado</h1>

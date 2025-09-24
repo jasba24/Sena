@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
-import { deleteOrder, getAllOrders } from "../services/orders"
+import { deleteOrder, getAllOrders, updateOrder } from "../services/orders"
 import { setToken } from "../services/orders"
-import Login from "./login"
 import Loading from "../components/layout/loading"
 import "../components/styles/order.css"
+import { Navigate, useLocation } from "react-router-dom"
 
 function OrderManagement() {
+  const location = useLocation()
   const [loading, setLoading] = useState(true)
   const [order, setOrder] = useState([])
   const [showInput, setShowInput] = useState(false)
@@ -13,19 +14,22 @@ function OrderManagement() {
   const [deleteNofitication, setDeleteNotification] = useState("")
   const user = JSON.parse(localStorage.getItem("loggedUser"))
 
-  if (!user) return <Login />
+  if (!user) return <Navigate to={"/admin/login"} state={{ from: location }} replace />
 
-  const toggleShowInput = () => {
-    setEditedClient(order?.client || "")
+  const toggleShowInput = (pedido) => {
+    setEditedClient(pedido?.client || "")
     setShowInput(!showInput)
   }
 
-  const updateClient = async () => {
-    await updateOrder(id, { client: order.client })
-    setOrder((prev) => ({
-      ...prev,
-      client: editedClient,
-    }))
+  const updateClient = async (id) => {
+    console.log(editedClient)
+
+    await updateOrder(id, { client: editedClient })
+    setOrder((prev) =>
+      prev.map((order) =>
+        order._id === id ? { ...order, client: editedClient } : order
+      )
+    )
 
     toggleShowInput()
   }
@@ -35,6 +39,8 @@ function OrderManagement() {
     const getOrder = async () => {
       try {
         const response = await getAllOrders()
+        console.log(response)
+
         setOrder(response.reverse())
       } catch (error) {
         console.error("Error al obtener el pedido:", error)
@@ -85,14 +91,20 @@ function OrderManagement() {
                       required
                       onChange={(e) => setEditedClient(e.target.value)}
                     />
-                    <button onClick={updateClient} className="buy-button green">
+                    <button
+                      onClick={() => updateClient(o._id)}
+                      className="buy-button green"
+                    >
                       Guardar cliente
                     </button>
                   </>
                 )}
               </h1>
               {!showInput && (
-                <button onClick={toggleShowInput} className="buy-button">
+                <button
+                  onClick={() => toggleShowInput(o)}
+                  className="buy-button"
+                >
                   Modificar cliente
                 </button>
               )}

@@ -25,11 +25,8 @@ function LoginForm({ handleErrorMessage }) {
       setUsername("")
       setPassword("")
       setTimeout(() => {
-        if (location.pathname.includes("pedido")) {
-          navigate(location.pathname)
-        } else {
-          navigate("/")
-        }
+        const from = location.state?.from?.pathname || "/"
+        navigate(from, { replace: true })
       }, 3000)
     } catch (e) {
       handleErrorMessage("Wrong credentials")
