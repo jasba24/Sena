@@ -35,9 +35,7 @@ function OrderManagement() {
     const getOrder = async () => {
       try {
         const response = await getAllOrders()
-        console.log(response)
-
-        setOrder(response)
+        setOrder(response.reverse())
       } catch (error) {
         console.error("Error al obtener el pedido:", error)
       } finally {

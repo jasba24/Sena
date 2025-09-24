@@ -29,7 +29,6 @@ function DeleteButton({
       }, 4000)
 
       categoryContext?.setRefreshFlag?.((prev) => {
-        console.log("Refresh flag cambiado:", !prev)
         return !prev
       })
     } catch (error) {

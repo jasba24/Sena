@@ -15,7 +15,6 @@ function ImageContainer() {
       const images = await getImagesByCategory(route.category)
       setImages(images)
       setLoading(false)
-      console.log(images.length)
     }
     fetchImages()
   }, [route.category])

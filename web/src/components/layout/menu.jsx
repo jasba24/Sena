@@ -35,6 +35,15 @@ function Menu() {
           <ul>
             <li>
               <Link
+                to={"/pedidos"}
+                className="menu-option"
+                onClick={toggleMenu}
+              >
+                Ver pedidos
+              </Link>
+            </li>
+            <li>
+              <Link
                 to={"/admin/login/change"}
                 className="menu-option"
                 onClick={toggleMenu}

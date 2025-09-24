@@ -14,12 +14,12 @@ function SelectionButtons({ handleSelectedItems, items }) {
     <>
       <div>
         <button className="buy-button green" onClick={selectAll}>
-          Seleccionar Todas
+          Seleccionarlas Todas
         </button>
       </div>
       <div>
         <button className="buy-button green" onClick={deselectAll}>
-          Deseleccionar Todas
+          Deseleccionarlas Todas
         </button>
       </div>
     </>
